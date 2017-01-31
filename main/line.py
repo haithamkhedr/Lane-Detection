@@ -1,8 +1,10 @@
 import numpy as np
 class Line():
 
-    def __init__ (self):
+    def __init__ (self,buffer_size):
 
+        self.__buffer_size = buffer_size
+        self.__n = 0
         # was the line detected in the last iteration?
         self.detected = False
         # x values of the last n fits of the line
@@ -23,9 +25,10 @@ class Line():
         self.allx = None
         #y values for detected line pixels
         self.ally = None
+        self.Full = False
 
     def __calcBestFit(self):
-        self.bestx = np.mean(np.array(recent_xfitted),axis = 0)
+        self.bestx = np.mean(np.array(self.recent_xfitted),axis = 0)
 
     def addLine(self,fitX , y , coeff , rCurv):
         self.allx = fitX
@@ -33,6 +36,15 @@ class Line():
         self.detected = True
         self.current_fit = np.copy(coeff)
         self.radius_of_curvature = rCurv
-        self.recent_xfitted.append(fitX)
+        if(self.__n < self.__buffer_size and not self.Full):
+            self.recent_xfitted.append(fitX)
+            self.__n = self.__n + 1
+            if(self.__n == self.__buffer_size):
+                self.Full = True
+                self.__n = 0
+        else:
+            self.recent_xfitted[self.__n] = fitX
+            self.__n = (self.__n +1) % self.__buffer_size
+
         self.__calcBestFit()
-        return self.best_fit
+        return self.bestx
