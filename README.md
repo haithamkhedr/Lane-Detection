@@ -43,7 +43,28 @@ It's clear that the perspective transfrom is working correctly as the line bound
 
 #### 4-Identifying lane pixels
 
-Identifying lane pixels is a defined in the function `find_lane_pixels()` in the 4th cell in `main/Lane Detection.ipynb`.
+Identifying lane pixels is defined in the function `find_lane_pixels()` in the 4th cell in `main/Lane Detection.ipynb`.
 To get the starting point of each lane I used a histogram for the lower half of the image then used a sliding window approach to detect the rest of the points going upwards to the top of the image, I chose the window size to be 50X60 which gave great results.
 Here is the result of finding the lane pixels of the example image used for this writeup
 ![Alt text] (./output_images/Lane_pixels.jpg)
+
+#### 5-Lane fitting and curvature calculation
+
+The Lane lines are fitted in `fit_lanes()` in the 4th cell in `main/Lane Detection.ipynb`. The lane pixels detected in the last step are fitted with a 2nd order polynomial using `np.polyfit()`. If lines are detected the lane curvature is calcualated in the same function by fitting a polynomial(in the world space) and applying the following equation to calculate the curvature.
+` left_curverad = ((1 + (2*left_fit_cr[0]*imshape[0]*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])`
+The position of the car relative to the center is calculated as follows:
+```
+xm_per_pix = 3.7/(0.546875*imshape[1]) # meters per pixel in x dimension
+screen_center_x = imshape[1]/2.0
+lane_width_pix = np.mean(np.subtract(rightfitX,leftfitX))
+lane_width = lane_width_pix * xm_per_pix
+car_center = np.mean(np.add(rightfitX,leftfitX)) / 2.0
+dist_off_center = (car_center - screen_center_x) * xm_per_pix
+```
+And here is the result of lane fitting 
+![Alt text] (./output_images/Fitted_Lanes.jpg)
+
+#### 6-Final output
+
+The final step is to warp back the image onto the original image, show the detected area between lanes and print calculated Lane curvature(average of both lane curvatures) and position of vehicle as shown below
+![Alt text] (./output_images/Final_output.jpg)
