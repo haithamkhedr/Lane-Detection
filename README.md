@@ -19,3 +19,22 @@ and here is the result:
 
 This is almost the most important part in the pipeline as it filters out unimportant colors as well as pixels which are most probably not lane lines. This is done by transforming the RGB image to HSL color space and to grayscale image. A gradient threshold(`thresh_gradient()` in 4th cell) is done on both new images and then they are merged to form the binary image. The last step is to mask this image to process only the region of interests(directly infront of the car where the lane would be). This part can be found in the 5th cell in`main/Lane Detection.ipynb`. The result is shown below:
 ![Alt text] (./output_images/Gradient_thresholding.jpg)
+
+#### 3-Perspective transform
+
+The code for perspective transform is included in `perspective_transform()` in the 4th cell in `main/Lane Detection.ipynb`. it is a wrapper for opencv functions `getPerspectiveTransform()` and `warpPerspective()` The source and destination points are calculated as follow:
+
+```
+p1 = [int(0.2*shape[1]),shape[0]]
+p2 = [int(0.46*shape[1]),int(0.66*shape[0])]
+p3 = [int(0.625*shape[1]),int(0.66*shape[0])]
+p4 = [int(0.9*shape[1]),shape[0]]
+src = np.float32([p1,p2,p3,p4])
+#destination points
+p1 = [int(0.27*shape[1]),shape[0]]
+p2 = [int(0.33*shape[1]),0]
+p3 = [int(0.83*shape[1]),0]
+p4 = [int(0.7*shape[1]),shape[0]]
+```
+The result of perspective transform is shown below:
+![Alt text] (./output_images/perspective_transform.jpg)
