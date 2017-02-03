@@ -68,3 +68,10 @@ And here is the result of lane fitting
 
 The final step is to warp back the image onto the original image, show the detected area between lanes and print calculated Lane curvature(average of both lane curvatures) and position of vehicle as shown below
 ![Alt text] (./output_images/Final_output.jpg)
+
+## Final video
+
+[Here is a link to the final video](https://github.com/HaithamKhedr/Lane-Detection/blob/master/main/out.mp4)
+
+## Discussion
+I think a vision approach alone will not provide the needeed robustness, because there might be a lot of scenarios where it is hard to detect lane lines like different lighting conditions, lots of shadows, asphalt with varying colors and hard curves. I think the pipeline can be enhanced if lane tracking is added using Kalman filter for exmaple.
