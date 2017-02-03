@@ -38,3 +38,12 @@ p4 = [int(0.7*shape[1]),shape[0]]
 ```
 The result of perspective transform is shown below:
 ![Alt text] (./output_images/perspective_transform.jpg)
+
+It's clear that the perspective transfrom is working correctly as the line boundaries are parallel, however there is some noise due to shadow.
+
+#### 4-Identifying lane pixels
+
+Identifying lane pixels is a defined in the function `find_lane_pixels()` in the 4th cell in `main/Lane Detection.ipynb`.
+To get the starting point of each lane I used a histogram for the lower half of the image then used a sliding window approach to detect the rest of the points going upwards to the top of the image, I chose the window size to be 50X60 which gave great results.
+Here is the result of finding the lane pixels of the example image used for this writeup
+![Alt text] (./output_images/Lane_pixels.jpg)
