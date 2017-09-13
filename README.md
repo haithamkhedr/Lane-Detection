@@ -71,7 +71,7 @@ The final step is to warp back the image onto the original image, show the detec
 
 ## Final video
 
-[Here is a link to the final video](https://github.com/HaithamKhedr/Lane-Detection/blob/master/main/out.mp4)
+[Here is a link to the final video](https://youtu.be/kfxBBiJSIUQ)
 
 ## Discussion
 I think a vision approach alone will not provide the needeed robustness, because there might be a lot of scenarios where it is hard to detect lane lines like different lighting conditions, lots of shadows, asphalt with varying colors and hard curves. I think the pipeline can be enhanced if lane tracking is added using Kalman filter for exmaple.
